@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Ac4y</Authors>
+    <Version>1.0.2</Version>
+    <Description>EF Core 2.1.0</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CSAc4yServiceObjectFinalLib" Version="1.0.0" />
+    <PackageReference Include="CSModulFinal" Version="1.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.0" />
+  </ItemGroup>
+
+</Project>
