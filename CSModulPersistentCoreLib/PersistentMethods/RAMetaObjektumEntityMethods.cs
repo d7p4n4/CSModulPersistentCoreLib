@@ -46,8 +46,22 @@ namespace d7p4n4Namespace.EFMethods.Class
             }
             return r;
         }
-		
-		public RAMetaObjektum LoadXmlById(int id)
+        public RAMetaObjektum LoadXmlByGuid(string guid)
+        {
+            RAMetaObjektum r = null;
+
+            using (var ctx = new AllContext(serverName, baseName, userName, password))
+            {
+                var query = ctx.RAMetaObjektums
+                                .Where(ss => ss.GUID == guid)
+                                .FirstOrDefault<RAMetaObjektum>();
+
+                r = query;
+            }
+            return r;
+        }
+
+        public RAMetaObjektum LoadXmlById(int id)
         {
 			RAMetaObjektum r = null;
 

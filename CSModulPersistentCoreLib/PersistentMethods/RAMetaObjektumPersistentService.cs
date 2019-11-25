@@ -43,6 +43,21 @@ namespace d7p4n4Namespace.PersistentService.Class
 
             return response;
         }
+        public GetObjectResponse LoadXmlByGuid(string guid)
+        {
+            var response = new GetObjectResponse();
+            try
+            {
+                response.Object = (_RAMetaObjektumEntityMethods.LoadXmlByGuid(guid));
+                response.Result = new Ac4yProcessResult() { Code = "1" };
+            }
+            catch (Exception exception)
+            {
+                response.Result = (new Ac4yProcessResult() { Code = "-1", Message = exception.Message });
+            }
+
+            return response;
+        }
 
         public GetObjectResponse GetFirstWithXML(int id)
         {
