@@ -12,16 +12,16 @@ using System.IO;
 
 namespace d7p4n4Namespace.EFMethods.Class
 {
-    public class MuveletEntityMethods : MuveletAlgebra
+    public class TablaEntityMethods : TablaAlgebra
     {
 		public string serverName { get; set; }
 		public string baseName { get; set; }
         public string userName { get; set; }
         public string password { get; set; }
 
-        public MuveletEntityMethods() { }
+        public TablaEntityMethods() { }
 
-        public MuveletEntityMethods(string sName, string newBaseName, string uName, string pwd)
+        public TablaEntityMethods(string sName, string newBaseName, string uName, string pwd)
         {
 			serverName = sName;
             baseName = newBaseName;
@@ -32,89 +32,74 @@ namespace d7p4n4Namespace.EFMethods.Class
             context.Database.EnsureCreated();
         }
 
-        public Muvelet findFirstById(int id)
+        public Tabla findFirstById(int id)
         {
-            Muvelet m = null;
+            Tabla t = null;
 
             using (var ctx = new AllContext(serverName, baseName, userName, password))
             {
-                var query = ctx.Muvelets
+                var query = ctx.Tablas
                                 .Where(ss => ss.id == id)
-                                .FirstOrDefault<Muvelet>();
+                                .FirstOrDefault<Tabla>();
 
-                m = query;
+                t = query;
             }
-            return m;
-        }
-
-        public Muvelet LoadXmlByGuid(string guid)
-        {
-            Muvelet m = null;
-
-            using (var ctx = new AllContext(serverName, baseName, userName, password))
-            {
-                var query = ctx.Muvelets
-                                .Where(ss => ss.GUID == guid)
-                                .FirstOrDefault<Muvelet>();
-
-                m = query;
-            }
-            return m;
-        }
-
-        public Muvelet LoadXmlById(int id)
-        {
-			Muvelet m = null;
-
-            using (var ctx = new AllContext(serverName, baseName, userName, password))
-            {
-                var query = ctx.Muvelets
-                                .Where(ss => ss.id == id)
-                                .FirstOrDefault<Muvelet>();
-
-                m = query;
-            }
-
-            string xml = m.serialization;
-
-            Muvelet mResult = null;
-
-            XmlSerializer serializer = new XmlSerializer(typeof(Muvelet));
-
-            StringReader reader = new StringReader(xml);
-            mResult = (Muvelet)serializer.Deserialize(reader);
-            reader.Close();
-
-            return mResult;
+            return t;
         }
 		
-	public void addNew(Muvelet _Muvelet)
+		public Tabla LoadXmlById(int id)
+        {
+			Tabla t = null;
+
+            using (var ctx = new AllContext(serverName, baseName, userName, password))
+            {
+                var query = ctx.Tablas
+                                .Where(ss => ss.id == id)
+                                .FirstOrDefault<Tabla>();
+
+                t = query;
+            }
+
+            string xml = t.serialization;
+
+            Tabla tResult = null;
+
+            XmlSerializer serializer = new XmlSerializer(typeof(Tabla));
+
+            StringReader reader = new StringReader(xml);
+            tResult = (Tabla)serializer.Deserialize(reader);
+            reader.Close();
+
+            return tResult;
+        }
+		
+	public void addNew(Tabla _Tabla)
 	{
 		using (var ctx = new AllContext(serverName, baseName, userName, password))
             {
-                ctx.Muvelets.Add(_Muvelet);
+                ctx.Tablas.Add(_Tabla);
 
                 ctx.SaveChanges();
             }
 	}
 	
-	    public void SaveWithXml(Muvelet _Muvelet)
+	    public void SaveWithXml(Tabla _Tabla)
         {
             string xml = "";
 
-            XmlSerializer serializer = new XmlSerializer(typeof(Muvelet));
+            XmlSerializer serializer = new XmlSerializer(typeof(Tabla));
             StringWriter stringWriter = new StringWriter();
             XmlWriter xmlWriter = XmlWriter.Create(stringWriter);
 
-            serializer.Serialize(xmlWriter, _Muvelet);
+            serializer.Serialize(xmlWriter, _Tabla);
 
             xml = stringWriter.ToString();
 
-            _Muvelet.serialization = xml;
+            _Tabla.serialization = xml;
 
 			using (var ctx = new AllContext(serverName, baseName, userName, password))
             {
-                ctx.Muvelets.Add(_Muvelet);
+                ctx.Tablas.Add(_Tabla);
 
                 ctx.SaveChanges();
             }

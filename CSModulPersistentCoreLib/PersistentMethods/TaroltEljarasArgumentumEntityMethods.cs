@@ -12,16 +12,16 @@ using System.IO;
 
 namespace d7p4n4Namespace.EFMethods.Class
 {
-    public class MuveletEntityMethods : MuveletAlgebra
+    public class TaroltEljarasArgumentumEntityMethods : TaroltEljarasArgumentumAlgebra
     {
 		public string serverName { get; set; }
 		public string baseName { get; set; }
         public string userName { get; set; }
         public string password { get; set; }
 
-        public MuveletEntityMethods() { }
+        public TaroltEljarasArgumentumEntityMethods() { }
 
-        public MuveletEntityMethods(string sName, string newBaseName, string uName, string pwd)
+        public TaroltEljarasArgumentumEntityMethods(string sName, string newBaseName, string uName, string pwd)
         {
 			serverName = sName;
             baseName = newBaseName;
@@ -32,89 +32,74 @@ namespace d7p4n4Namespace.EFMethods.Class
             context.Database.EnsureCreated();
         }
 
-        public Muvelet findFirstById(int id)
+        public TaroltEljarasArgumentum findFirstById(int id)
         {
-            Muvelet m = null;
+            TaroltEljarasArgumentum t = null;
 
             using (var ctx = new AllContext(serverName, baseName, userName, password))
             {
-                var query = ctx.Muvelets
+                var query = ctx.TaroltEljarasArgumentums
                                 .Where(ss => ss.id == id)
-                                .FirstOrDefault<Muvelet>();
+                                .FirstOrDefault<TaroltEljarasArgumentum>();
 
-                m = query;
+                t = query;
             }
-            return m;
-        }
-
-        public Muvelet LoadXmlByGuid(string guid)
-        {
-            Muvelet m = null;
-
-            using (var ctx = new AllContext(serverName, baseName, userName, password))
-            {
-                var query = ctx.Muvelets
-                                .Where(ss => ss.GUID == guid)
-                                .FirstOrDefault<Muvelet>();
-
-                m = query;
-            }
-            return m;
-        }
-
-        public Muvelet LoadXmlById(int id)
-        {
-			Muvelet m = null;
-
-            using (var ctx = new AllContext(serverName, baseName, userName, password))
-            {
-                var query = ctx.Muvelets
-                                .Where(ss => ss.id == id)
-                                .FirstOrDefault<Muvelet>();
-
-                m = query;
-            }
-
-            string xml = m.serialization;
-
-            Muvelet mResult = null;
-
-            XmlSerializer serializer = new XmlSerializer(typeof(Muvelet));
-
-            StringReader reader = new StringReader(xml);
-            mResult = (Muvelet)serializer.Deserialize(reader);
-            reader.Close();
-
-            return mResult;
+            return t;
         }
 		
-	public void addNew(Muvelet _Muvelet)
+		public TaroltEljarasArgumentum LoadXmlById(int id)
+        {
+			TaroltEljarasArgumentum t = null;
+
+            using (var ctx = new AllContext(serverName, baseName, userName, password))
+            {
+                var query = ctx.TaroltEljarasArgumentums
+                                .Where(ss => ss.id == id)
+                                .FirstOrDefault<TaroltEljarasArgumentum>();
+
+                t = query;
+            }
+
+            string xml = t.serialization;
+
+            TaroltEljarasArgumentum tResult = null;
+
+            XmlSerializer serializer = new XmlSerializer(typeof(TaroltEljarasArgumentum));
+
+            StringReader reader = new StringReader(xml);
+            tResult = (TaroltEljarasArgumentum)serializer.Deserialize(reader);
+            reader.Close();
+
+            return tResult;
+        }
+		
+	public void addNew(TaroltEljarasArgumentum _TaroltEljarasArgumentum)
 	{
 		using (var ctx = new AllContext(serverName, baseName, userName, password))
             {
-                ctx.Muvelets.Add(_Muvelet);
+                ctx.TaroltEljarasArgumentums.Add(_TaroltEljarasArgumentum);
 
                 ctx.SaveChanges();
             }
 	}
 	
-	    public void SaveWithXml(Muvelet _Muvelet)
+	    public void SaveWithXml(TaroltEljarasArgumentum _TaroltEljarasArgumentum)
         {
             string xml = "";
 
-            XmlSerializer serializer = new XmlSerializer(typeof(Muvelet));
+            XmlSerializer serializer = new XmlSerializer(typeof(TaroltEljarasArgumentum));
             StringWriter stringWriter = new StringWriter();
             XmlWriter xmlWriter = XmlWriter.Create(stringWriter);
 
-            serializer.Serialize(xmlWriter, _Muvelet);
+            serializer.Serialize(xmlWriter, _TaroltEljarasArgumentum);
 
             xml = stringWriter.ToString();
 
-            _Muvelet.serialization = xml;
+            _TaroltEljarasArgumentum.serialization = xml;
 
 			using (var ctx = new AllContext(serverName, baseName, userName, password))
             {
-                ctx.Muvelets.Add(_Muvelet);
+                ctx.TaroltEljarasArgumentums.Add(_TaroltEljarasArgumentum);
 
                 ctx.SaveChanges();
             }

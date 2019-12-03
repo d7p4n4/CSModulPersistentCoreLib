@@ -3,31 +3,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CSAc4yObjectService.Class;
-using CSAc4yService.Class;
-using CSModulPersistentCoreLib.PersistentMethods;
-using CSModulPersistentCoreLib.XmlToHtml;
+using CSAc4yService.Class; 
 using d7p4n4Namespace.EFMethods.Class;
 using d7p4n4Namespace.Final.Class;
 
 namespace d7p4n4Namespace.PersistentService.Class
 {
-    public class ModulPersistentService
+    public class TablaPersistentService
     {
 		public string serverName { get; set; }
 		public string baseName { get; set; }
         public string userName { get; set; }
         public string password { get; set; }
-		private ModulEntityMethods _ModulEntityMethods { get; set; }
+		private TablaEntityMethods _TablaEntityMethods { get; set; }
 		
-		public ModulPersistentService() { }
+		public TablaPersistentService() { }
 
-        public ModulPersistentService(string sName, string newBaseName, string uName, string pwd)
+        public TablaPersistentService(string sName, string newBaseName, string uName, string pwd)
         {
 			serverName = sName;
             baseName = newBaseName;
             userName = uName;
             password = pwd;
-            _ModulEntityMethods = new ModulEntityMethods(sName, newBaseName, uName, pwd);
+            _TablaEntityMethods = new TablaEntityMethods(sName, newBaseName, uName, pwd);
         }
 
         public GetObjectResponse GetFirstById(int id)
@@ -35,7 +33,7 @@ namespace d7p4n4Namespace.PersistentService.Class
             var response = new GetObjectResponse();
             try
             {
-                response.Object = (_ModulEntityMethods.findFirstById(id));
+                response.Object = (_TablaEntityMethods.findFirstById(id));
                 response.Result = new Ac4yProcessResult() { Code = "1" };
             }
             catch (Exception exception)
@@ -51,7 +49,7 @@ namespace d7p4n4Namespace.PersistentService.Class
             var response = new GetObjectResponse();
             try
             {
-                response.Object = (_ModulEntityMethods.LoadXmlById(id));
+                response.Object = (_TablaEntityMethods.LoadXmlById(id));
                 response.Result = new Ac4yProcessResult() { Code = "1" };
             }
             catch (Exception exception)
@@ -62,12 +60,12 @@ namespace d7p4n4Namespace.PersistentService.Class
             return response;
 		}
 		
-		public GetObjectResponse SaveWithXml(Modul _Modul)
+		public GetObjectResponse SaveWithXml(Tabla _Tabla)
         {
             var response = new GetObjectResponse();
             try
             {
-                _ModulEntityMethods.SaveWithXml(_Modul);
+                _TablaEntityMethods.SaveWithXml(_Tabla);
                 response.Result = new Ac4yProcessResult() { Code = "1" };
             }
             catch (Exception exception)
@@ -78,29 +76,12 @@ namespace d7p4n4Namespace.PersistentService.Class
             return response;
         }
 		
-		public GetObjectResponse Save(Modul _Modul)
+		public GetObjectResponse Save(Tabla _Tabla)
         {
             var response = new GetObjectResponse();
             try
             {
-                _ModulEntityMethods.addNew(_Modul);
-                response.Result = new Ac4yProcessResult() { Code = "1" };
-            }
-            catch (Exception exception)
-            {
-                response.Result = (new Ac4yProcessResult() { Code = "-1", Message = exception.Message });
-            }
-
-            return response;
-        }
-
-        public GetObjectResponse LoadHtml(XmlToHtmlClass xmlToHtmlClass)
-        {
-            var xmlToHtml = new XmlToHtml();
-            var response = new GetObjectResponse();
-            try
-            {
-                response.Object = xmlToHtml.TransformXMLToHTML(xmlToHtmlClass.xml, xmlToHtmlClass.xsl);
+                _TablaEntityMethods.addNew(_Tabla);
                 response.Result = new Ac4yProcessResult() { Code = "1" };
             }
             catch (Exception exception)

@@ -39,6 +39,12 @@ namespace d7p4n4Namespace.Context.Class
 
         public DbSet<TaroltEljaras> TaroltEljarass { get; set; }
 
+        public DbSet<TaroltEljarasArgumentum> TaroltEljarasArgumentums { get; set; }
+
+        public DbSet<Tabla> Tablas { get; set; }
+
+        public DbSet<TablaOszlop> TablaOszlops { get; set; }
+
 
     }
 }

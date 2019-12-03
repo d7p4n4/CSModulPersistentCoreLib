@@ -46,8 +46,23 @@ namespace d7p4n4Namespace.EFMethods.Class
             }
             return t;
         }
-		
-		public TaroltEljaras LoadXmlById(int id)
+
+        public TaroltEljaras LoadXmlByGuid(string guid)
+        {
+            TaroltEljaras t = null;
+
+            using (var ctx = new AllContext(serverName, baseName, userName, password))
+            {
+                var query = ctx.TaroltEljarass
+                                .Where(ss => ss.GUID == guid)
+                                .FirstOrDefault<TaroltEljaras>();
+
+                t = query;
+            }
+            return t;
+        }
+
+        public TaroltEljaras LoadXmlById(int id)
         {
 			TaroltEljaras t = null;
 
